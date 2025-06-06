@@ -34,7 +34,6 @@ Instant Weather Neon est une application météo révolutionnaire qui combine :
 
 ### ⚙️ Personnalisation Avancée
 - Sélection des données à afficher
-- Mode sombre/clair dynamique
 - Interface responsive adaptée à tous écrans
 - Animations fluides et effets visuels
 
@@ -76,13 +75,13 @@ Instant Weather Neon est une application météo révolutionnaire qui combine :
 6. Utilisez le bouton de thème pour basculer entre mode clair/sombre
 
 ## 📱 Compatibilité
-- Testé sur Chrome, Firefox, Safari et Edge (versions récentes)
+- Testé sur Chrome, Firefox, Safari et Edge 
 - Optimisé pour desktop, tablette et mobile
 - Fonctionne avec tous les codes postaux français
 
 
 ## 📜 Contexte
-Projet réalisé dans le cadre de [votre formation/projet personnel]
+Projet réalisé dans le cadre de la SAE23
 Utilisation des APIs Météo Concept et Geo Gouv
 Design inspiré des interfaces cyberpunk
 
@@ -90,3 +89,6 @@ Design inspiré des interfaces cyberpunk
 - Données limitées à la France métropolitaine et DOM-TOM
 - Prévisions maximales de 7 jours
 - Nécessite une connexion internet pour fonctionner
+
+- lien : https://the-dark-zidan.github.io/SAE23-Instant-Weather/
+  
