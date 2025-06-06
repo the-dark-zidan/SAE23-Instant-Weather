@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Instant Weather Neon ⚡</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <div class="container">
+        <!-- Header avec effet néon -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo neon-glow">
+                    <i class="fas fa-bolt lightning-icon"></i>
+                    <h1 class="neon-text">INSTANT WEATHER</h1>
+                    <div class="lightning-effects"></div>
+                </div>
+                <p class="subtitle glow-text">Prévisions météo du futur avec géolocalisation avancée</p>
+                <div class="header-particles"></div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section avec design futuriste -->
+            <section class="search-section">
+                <div class="search-card cyber-border">
+                    <div class="card-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-satellite-dish pulse-icon"></i>
+                            SCANNER GÉOGRAPHIQUE
+                        </h2>
+                        <div class="scan-line"></div>
+                    </div>
+                    
+                    <form id="weather-form" class="weather-form">
+                        <!-- Code Postal avec effet néon -->
+                        <div class="form-group neon-input-group">
+                            <label for="code-postal" class="cyber-label">
+                                <i class="fas fa-crosshairs"></i>
+                                Code Postal Cible
+                            </label>
+                            <div class="input-container">
+                                <input 
+                                    type="text" 
+                                    id="code-postal" 
+                                    class="cyber-input"
+                                    placeholder="Ex: 75001, 69000, 13000..." 
+                                    maxlength="5"
+                                    pattern="[0-9]{5}"
+                                    required
+                                >
+                                <div class="input-glow"></div>
+                                <div class="input-scan"></div>
+                            </div>
+                            <small class="help-text">Coordonnées françaises requises</small>
+                        </div>
+
+                        <!-- Commune Selection -->
+                        <div class="form-group neon-input-group">
+                            <label for="commune-select" class="cyber-label">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Localisation Précise
+                            </label>
+                            <div class="select-container">
+                                <select id="commune-select" class="cyber-select" disabled>
+                                    <option value="">-- Analyse en cours --</option>
+                                </select>
+                                <div class="select-glow"></div>
+                            </div>
+                            <small class="help-text">Sélection automatique après scan</small>
+                        </div>
+
+                        <!-- Days Slider avec design futuriste -->
+                        <div class="form-group">
+                            <label for="days-slider" class="cyber-label">
+                                <i class="fas fa-calendar-week"></i>
+                                Portée Temporelle: <span id="days-value" class="value-display">3</span> jours
+                            </label>
+                            <div class="slider-container">
+                                <input 
+                                    type="range" 
+                                    id="days-slider" 
+                                    min="1" 
+                                    max="7" 
+                                    value="3"
+                                    class="cyber-slider"
+                                >
+                                <div class="slider-track"></div>
+                                <div class="slider-progress"></div>
+                            </div>
+                            <div class="slider-labels">
+                                <span>1j</span>
+                                <span>2j</span>
+                                <span>3j</span>
+                                <span>4j</span>
+                                <span>5j</span>
+                                <span>6j</span>
+                                <span>7j</span>
+                            </div>
+                        </div>
+
+                        <!-- Options avec switches néon -->
+                        <div class="form-group">
+                            <fieldset class="cyber-fieldset">
+                                <legend class="cyber-legend">
+                                    <i class="fas fa-cogs"></i>
+                                    Modules Avancés
+                                </legend>
+                                <div class="options-grid">
+                                    <label class="neon-switch">
+                                        <input type="checkbox" id="latitude" name="options" value="latitude">
+                                        <span class="switch-slider"></span>
+                                        <span class="switch-label">Latitude GPS</span>
+                                    </label>
+                                    <label class="neon-switch">
+                                        <input type="checkbox" id="longitude" name="options" value="longitude">
+                                        <span class="switch-slider"></span>
+                                        <span class="switch-label">Longitude GPS</span>
+                                    </label>
+                                    <label class="neon-switch">
+                                        <input type="checkbox" id="rain" name="options" value="rain">
+                                        <span class="switch-slider"></span>
+                                        <span class="switch-label">Précipitations</span>
+                                    </label>
+                                    <label class="neon-switch">
+                                        <input type="checkbox" id="wind" name="options" value="wind">
+                                        <span class="switch-slider"></span>
+                                        <span class="switch-label">Vitesse Vent</span>
+                                    </label>
+                                    <label class="neon-switch">
+                                        <input type="checkbox" id="wind-direction" name="options" value="wind-direction">
+                                        <span class="switch-slider"></span>
+                                        <span class="switch-label">Direction Vent</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <!-- Submit Button ultra futuriste -->
+                        <button type="submit" id="submit-btn" class="cyber-button" disabled>
+                            <span class="button-text">
+                                <i class="fas fa-rocket"></i>
+                                LANCER ANALYSE
+                            </span>
+                            <div class="button-glow"></div>
+                            <div class="button-particles"></div>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section" style="display: none;">
+                <div class="results-header">
+                    <h2 id="city-name" class="results-title">Analyse Météorologique</h2>
+                    <div class="location-info cyber-border" id="location-info"></div>
+                </div>
+                <div class="weather-grid" id="weather-grid"></div>
+            </section>
+
+            <!-- Loading avec animation cyber -->
+            <div class="loading" id="loading" style="display: none;">
+                <div class="cyber-loader">
+                    <div class="loader-ring"></div>
+                    <div class="loader-ring"></div>
+                    <div class="loader-ring"></div>
+                    <div class="loader-core"></div>
+                </div>
+                <p class="loading-text">Analyse des données satellitaires...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+
+            <!-- Error Message avec style cyber -->
+            <div class="error-message cyber-border" id="error-message" style="display: none;">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <p id="error-text" class="error-text"></p>
+                <div class="error-glow"></div>
+            </div>
+        </main>
+
+        <!-- Dark Mode Toggle futuriste -->
+        <div class="theme-toggle">
+            <button id="dark-mode-btn" class="theme-btn" aria-label="Mode sombre">
+                <i class="fas fa-moon"></i>
+                <div class="btn-ripple"></div>
+            </button>
+        </div>
+
+        <!-- Footer cyber -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>&copy; 2025 Instant Weather Neon</p>
+                    <small>Powered by Météo Concept API</small>
+                </div>
+                <div class="footer-right">
+                    <a href="#" class="social-link" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                        <div class="link-glow"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-scan-line"></div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
