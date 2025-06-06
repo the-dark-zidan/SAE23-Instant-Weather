@@ -25,7 +25,6 @@ const elements = {
     loading: document.getElementById('loading'),
     errorMessage: document.getElementById('error-message'),
     errorText: document.getElementById('error-text'),
-    darkModeBtn: document.getElementById('dark-mode-btn')
 };
 
 // Variables globales
@@ -37,7 +36,6 @@ let currentCityData = null;
  */
 function initApp() {
     setupEventListeners();
-    initDarkMode();
 }
 
 /**
@@ -48,7 +46,6 @@ function setupEventListeners() {
     elements.codePostalInput.addEventListener('input', handleCodePostalInput);
     elements.communeSelect.addEventListener('change', handleCommuneChange);
     elements.daysSlider.addEventListener('input', updateDaysValue);
-    elements.darkModeBtn.addEventListener('click', toggleDarkMode);
 }
 
 /**
@@ -720,46 +717,6 @@ function showError(message) {
  */
 function hideError() {
     elements.errorMessage.style.display = 'none';
-}
-
-/**
- * Initialisation du mode sombre
- */
-function initDarkMode() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme) {
-        setTheme(savedTheme);
-    } else if (prefersDark) {
-        setTheme('dark');
-    }
-    
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            setTheme(e.matches ? 'dark' : 'light');
-        }
-    });
-}
-
-/**
- * Basculement du mode sombre
- */
-function toggleDarkMode() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-}
-
-/**
- * Application du thème
- */
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    
-    const icon = elements.darkModeBtn.querySelector('i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 }
 
 /**

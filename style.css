@@ -1051,54 +1051,6 @@
     font-weight: 500;
   }
   
-  /* ====== THEME TOGGLE ====== */
-  .theme-toggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1000;
-  }
-  
-  .theme-btn {
-    width: 60px;
-    height: 60px;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: var(--transition-smooth);
-    box-shadow: 
-      0 4px 15px rgba(139, 92, 246, 0.4),
-      0 0 20px rgba(139, 92, 246, 0.2);
-  }
-  
-  .theme-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 
-      0 6px 20px rgba(139, 92, 246, 0.6),
-      0 0 30px rgba(139, 92, 246, 0.4);
-  }
-  
-  .btn-ripple {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: var(--transition-fast);
-  }
-  
-  .theme-btn:active .btn-ripple {
-    width: 100px;
-    height: 100px;
-  }
   
   /* ====== FOOTER ====== */
   .footer {
