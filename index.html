@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚡ Instant Weather Neon ⚡</title>
     
-    <!-- Fonts -->
+    <!-- Chargement des polices -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
+    <!-- Chargement des icônes -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Leaflet Map -->
+    <!-- Styles pour Leaflet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
-
     
-    <!-- Leaflet Map -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+    <!-- Script Leaflet -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
     
-    <!-- Custom Styles -->
+    <!-- Styles CSS personnalisés -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,7 +25,7 @@
     <div class="twinkling"></div>
     
     <div class="container">
-        <!-- Header avec effet néon -->
+        <!-- En-tête avec effet néon -->
         <header class="header">
             <div class="header-content">
                 <div class="logo neon-glow">
@@ -40,9 +38,9 @@
             </div>
         </header>
 
-        <!-- Main Content -->
+        <!-- Contenu principal -->
         <main class="main-content">
-            <!-- Search Section avec design futuriste -->
+            <!-- Section de recherche au design futuriste -->
             <section class="search-section">
                 <div class="search-card cyber-border">
                     <div class="card-header">
@@ -54,7 +52,7 @@
                     </div>
                     
                     <form id="weather-form" class="weather-form">
-                        <!-- Code Postal avec effet néon -->
+                        <!-- Champ pour le code postal avec effet néon -->
                         <div class="form-group neon-input-group">
                             <label for="code-postal" class="cyber-label">
                                 <i class="fas fa-crosshairs"></i>
@@ -76,7 +74,7 @@
                             <small class="help-text">Coordonnées françaises requises</small>
                         </div>
 
-                        <!-- Commune Selection -->
+                        <!-- Sélection de la commune -->
                         <div class="form-group neon-input-group">
                             <label for="commune-select" class="cyber-label">
                                 <i class="fas fa-map-marker-alt"></i>
@@ -91,7 +89,7 @@
                             <small class="help-text">Sélection automatique après scan</small>
                         </div>
 
-                        <!-- Days Slider avec design futuriste -->
+                        <!-- Curseur pour le nombre de jours -->
                         <div class="form-group">
                             <label for="days-slider" class="cyber-label">
                                 <i class="fas fa-calendar-week"></i>
@@ -120,7 +118,7 @@
                             </div>
                         </div>
 
-                        <!-- Options avec switches néon -->
+                        <!-- Options avec interrupteurs néon -->
                         <div class="form-group">
                             <fieldset class="cyber-fieldset">
                                 <legend class="cyber-legend">
@@ -157,7 +155,7 @@
                             </fieldset>
                         </div>
 
-                        <!-- Submit Button ultra futuriste -->
+                        <!-- Bouton d'envoi au design futuriste -->
                         <button type="submit" id="submit-btn" class="cyber-button" disabled>
                             <span class="button-text">
                                 <i class="fas fa-rocket"></i>
@@ -170,7 +168,7 @@
                 </div>
             </section>
 
-            <!-- Results Section -->
+            <!-- Section des résultats -->
             <section class="results-section" id="results-section" style="display: none;">
                 <div class="results-header">
                     <h2 id="city-name" class="results-title">Analyse Météorologique</h2>
@@ -179,7 +177,7 @@
                 <div class="weather-grid" id="weather-grid"></div>
             </section>
 
-            <!-- Loading avec animation cyber -->
+            <!-- Indicateur de chargement avec animation cyber -->
             <div class="loading" id="loading" style="display: none;">
                 <div class="cyber-loader">
                     <div class="loader-ring"></div>
@@ -193,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- Error Message avec style cyber -->
+            <!-- Message d'erreur avec style cyber -->
             <div class="error-message cyber-border" id="error-message" style="display: none;">
                 <div class="error-icon">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -203,9 +201,7 @@
             </div>
         </main>
 
-        
-
-        <!-- Footer cyber -->
+        <!-- Pied de page au design cyber -->
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-left">
@@ -223,7 +219,7 @@
         </footer>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

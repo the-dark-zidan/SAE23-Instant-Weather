@@ -1,7 +1,3 @@
-/**
- * Instant Weather V2 - Application météorologique avec recherche par code postal
- */
-
 // Configuration de l'API
 const API_CONFIG = {
     TOKEN: '40cb912aff2f7792bb9ecd409d50ed4e2dca5e462e8e7ae2643237298e6198be',
@@ -9,7 +5,7 @@ const API_CONFIG = {
     METEO_API: 'https://api.meteo-concept.com/api/forecast/daily'
 };
 
-// Elements DOM
+// Sélection d'éléments dans le DOM
 const elements = {
     form: document.getElementById('weather-form'),
     codePostalInput: document.getElementById('code-postal'),
@@ -27,19 +23,19 @@ const elements = {
     errorText: document.getElementById('error-text'),
 };
 
-// Variables globales
+// Variables globales pour stocker les données
 let currentCommunes = [];
 let currentCityData = null;
 
 /**
- * Initialisation de l'application
+ * Lancement de l'application
  */
 function initApp() {
     setupEventListeners();
 }
 
 /**
- * Configuration des écouteurs d'événements
+ * Ajout des écouteurs d'événements
  */
 function setupEventListeners() {
     elements.form.addEventListener('submit', handleFormSubmit);
@@ -49,18 +45,18 @@ function setupEventListeners() {
 }
 
 /**
- * Gestion de la saisie du code postal
+ * Gestion de l'entrée du code postal
  */
 async function handleCodePostalInput() {
     const codePostal = elements.codePostalInput.value.trim();
     
-    // Reset des éléments
+    // Réinitialisation des éléments
     elements.communeSelect.innerHTML = '<option value="">-- Sélectionnez une commune --</option>';
     elements.communeSelect.disabled = true;
     elements.submitBtn.disabled = true;
     hideError();
 
-    // Validation du code postal
+    // Vérification du format du code postal
     if (!/^\d{5}$/.test(codePostal)) {
         if (codePostal.length > 0) {
             showError('Veuillez entrer un code postal valide (5 chiffres)');
@@ -80,22 +76,22 @@ async function handleCodePostalInput() {
 }
 
 /**
- * Récupération des communes par code postal
+ * Récupération des communes liées à un code postal
  */
 async function fetchCommunesByCodePostal(codePostal) {
-    // Utiliser le format GeoJSON pour avoir les coordonnées du centre
+    // Récupération des coordonnées géographiques
     const response = await fetch(`${API_CONFIG.GEO_API}?codePostal=${codePostal}&format=geojson&geometry=centre`);
     if (!response.ok) throw new Error("Erreur réseau");
     
     const geoJsonData = await response.json();
     console.log('Données GeoJSON reçues:', geoJsonData);
     
-    // Convertir les features GeoJSON en format simple
+    // Transformation des données GeoJSON
     const communes = geoJsonData.features?.map(feature => ({
         code: feature.properties.code,
         nom: feature.properties.nom,
         codesPostaux: feature.properties.codesPostaux,
-        centre: feature.geometry // Ici on a les vraies coordonnées !
+        centre: feature.geometry // Coordonnées géographiques
     })) || [];
     
     console.log('Communes converties:', communes);
@@ -103,7 +99,7 @@ async function fetchCommunesByCodePostal(codePostal) {
 }
 
 /**
- * Affichage des communes dans le select
+ * Affichage des communes dans la liste déroulante
  */
 function displayCommunes(communes) {
     currentCommunes = communes;
@@ -124,7 +120,7 @@ function displayCommunes(communes) {
 }
 
 /**
- * Gestion du changement de commune
+ * Réaction au changement de sélection de commune
  */
 function handleCommuneChange() {
     const selectedCode = elements.communeSelect.value;
@@ -132,12 +128,12 @@ function handleCommuneChange() {
     
     if (selectedCode) {
         currentCityData = currentCommunes.find(c => c.code === selectedCode);
-        console.log('Commune sélectionnée:', currentCityData); // Debug pour voir la structure
+        console.log('Commune sélectionnée:', currentCityData); // Débogage
     }
 }
 
 /**
- * Gestion de la soumission du formulaire
+ * Gestion de l'envoi du formulaire
  */
 async function handleFormSubmit(event) {
     event.preventDefault();
@@ -171,7 +167,7 @@ async function handleFormSubmit(event) {
 }
 
 /**
- * Récupération des données météo
+ * Récupération des données météorologiques pour une commune
  */
 async function fetchMeteoByCommune(selectedCommune, numberOfDays = 1) {
     try {
@@ -193,7 +189,7 @@ async function fetchMeteoByCommune(selectedCommune, numberOfDays = 1) {
         const data = await response.json();
         console.log('Données météo complètes reçues:', data);
         
-        // Vérifier les différents formats possibles de réponse
+        // Extraction des données de prévisions
         let forecasts = null;
         
         if (data.forecast && Array.isArray(data.forecast)) {
@@ -224,15 +220,14 @@ async function fetchMeteoByCommune(selectedCommune, numberOfDays = 1) {
 }
 
 /**
- * Affichage des résultats
+ * Affichage des résultats de la météo
  */
 function displayResults(cityData, forecast, selectedOptions) {
     elements.cityName.textContent = `Prévisions pour ${cityData.nom}`;
     displayLocationInfo(cityData, selectedOptions);
     
-    // Ajouter les cartes résumées (météo + localisation)
+    // Création des cartes météo et localisation
     displaySummaryCards(cityData, forecast[0]);
-    
     generateWeatherCards(forecast, selectedOptions);
     
     elements.resultsSection.style.display = 'block';
@@ -240,16 +235,16 @@ function displayResults(cityData, forecast, selectedOptions) {
 }
 
 /**
- * Affichage des cartes résumées (météo + localisation)
+ * Affichage des cartes de résumé météo et localisation
  */
 function displaySummaryCards(cityData, todayWeather) {
-    // Supprimer les anciennes cartes si elles existent
+    // Suppression des anciennes cartes
     const existingSummary = document.getElementById('summary-container');
     if (existingSummary) {
         existingSummary.remove();
     }
     
-    // Créer le conteneur pour les deux cartes
+    // Création du conteneur des cartes
     const summaryContainer = document.createElement('div');
     summaryContainer.id = 'summary-container';
     summaryContainer.className = 'summary-container';
@@ -263,12 +258,12 @@ function displaySummaryCards(cityData, todayWeather) {
     summaryContainer.appendChild(weatherCard);
     summaryContainer.appendChild(locationCard);
     
-    // Insérer le conteneur après les informations de localisation
+    // Insertion du conteneur après les informations de localisation
     elements.locationInfo.parentNode.insertBefore(summaryContainer, elements.locationInfo.nextSibling);
 }
 
 /**
- * Création de la carte météo résumée
+ * Création d'une carte de résumé météo
  */
 function createWeatherSummaryCard(todayWeather) {
     const weatherCard = document.createElement('div');
@@ -296,24 +291,23 @@ function createWeatherSummaryCard(todayWeather) {
 }
 
 /**
- * Création de la carte de localisation AVEC MINI-CARTE INTÉGRÉE
+ * Création d'une carte de localisation avec mini-carte intégrée
  */
 function createLocationCard(cityData) {
     const locationCard = document.createElement('div');
     locationCard.className = 'location-summary-card';
     
-    // Extraire les coordonnées au format GeoJSON
     let latitude = null;
     let longitude = null;
     
     if (cityData.centre && cityData.centre.coordinates && cityData.centre.coordinates.length >= 2) {
-        longitude = cityData.centre.coordinates[0]; // Premier élément = longitude
-        latitude = cityData.centre.coordinates[1];  // Deuxième élément = latitude
+        longitude = cityData.centre.coordinates[0]; // Longitude
+        latitude = cityData.centre.coordinates[1];  // Latitude
     }
     
     console.log('Coordonnées extraites:', { latitude, longitude, cityData: cityData.centre });
     
-    // Créer un ID unique pour cette carte
+    // Création d'un identifiant unique pour la carte
     const mapId = `map-${cityData.code}-${Date.now()}`;
     
     locationCard.innerHTML = `
@@ -332,7 +326,7 @@ function createLocationCard(cityData) {
         </div>
     `;
     
-    // Initialiser la carte après l'insertion dans le DOM
+    // Initialisation de la carte après son insertion dans le DOM
     setTimeout(() => {
         if (latitude !== null && longitude !== null) {
             initMiniMap(mapId, latitude, longitude, cityData.nom);
@@ -343,11 +337,11 @@ function createLocationCard(cityData) {
 }
 
 /**
- * Initialisation de la mini-carte Leaflet
+ * Initialisation de la mini-carte avec Leaflet
  */
 function initMiniMap(mapId, latitude, longitude, cityName) {
     try {
-        // Vérifier que l'élément existe
+        // Vérification de l'existence de l'élément
         const mapElement = document.getElementById(mapId);
         if (!mapElement) {
             console.error('Élément de carte non trouvé:', mapId);
@@ -356,7 +350,7 @@ function initMiniMap(mapId, latitude, longitude, cityName) {
 
         console.log('Initialisation de la carte:', mapId, 'Coordonnées:', latitude, longitude);
 
-        // Créer la carte avec Leaflet - Navigation activée
+        // Création de la carte Leaflet
         const map = L.map(mapId, {
             center: [latitude, longitude],
             zoom: 13,
@@ -369,13 +363,13 @@ function initMiniMap(mapId, latitude, longitude, cityName) {
             dragging: true
         });
 
-        // Ajouter les tuiles OpenStreetMap
+        // Ajout des tuiles OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // Ajouter un marqueur avec popup contenant les coordonnées
+        // Ajout d'un marqueur avec popup pour afficher les coordonnées
         const marker = L.marker([latitude, longitude]).addTo(map);
         const coordsText = `${latitude.toFixed(4)}°N, ${longitude.toFixed(4)}°E`;
         marker.bindPopup(`
@@ -402,7 +396,7 @@ function openFullMap(latitude, longitude, cityName) {
 }
 
 /**
- * Obtenir le département à partir du code postal
+ * Obtenir le nom du département à partir du code postal
  */
 function getDepartementFromCodePostal(codePostal) {
     if (!codePostal) return 'France';
@@ -444,31 +438,30 @@ function getDepartementFromCodePostal(codePostal) {
 function displayLocationInfo(cityData, selectedOptions) {
     let locationHTML = `<strong>${cityData.nom}</strong>`;
     
-    // Ajouter le code postal si disponible
+    // Afficher le code postal si disponible
     if (cityData.codesPostaux && cityData.codesPostaux.length > 0) {
         locationHTML += ` (${cityData.codesPostaux[0]})`;
     }
     
-    // Debug pour voir la structure des données
+    // log des données de localisation pour débogage
     console.log('Données de la commune pour coordonnées:', cityData);
     
-    // Extraire les coordonnées - l'API geo.api.gouv.fr utilise le format GeoJSON
+    // Extraction des coordonnées
     let latitude = null;
     let longitude = null;
     
     if (cityData.centre && cityData.centre.coordinates) {
-        // Format GeoJSON: [longitude, latitude]
         longitude = cityData.centre.coordinates[0];
         latitude = cityData.centre.coordinates[1];
     }
     
-    // Afficher la latitude si demandée
+    // Afficher la latitude si sélectionnée
     if (selectedOptions.includes('latitude')) {
         const latitudeText = latitude !== null ? latitude.toFixed(4) + '°' : 'Non disponible';
         locationHTML += ` • Latitude: ${latitudeText}`;
     }
     
-    // Afficher la longitude si demandée
+    // Afficher la longitude si sélectionnée
     if (selectedOptions.includes('longitude')) {
         const longitudeText = longitude !== null ? longitude.toFixed(4) + '°' : 'Non disponible';
         locationHTML += ` • Longitude: ${longitudeText}`;
@@ -478,7 +471,7 @@ function displayLocationInfo(cityData, selectedOptions) {
 }
 
 /**
- * Génération des cartes météorologiques
+ * Génération des cartes météo pour chaque jour
  */
 function generateWeatherCards(forecast, selectedOptions) {
     elements.weatherGrid.innerHTML = '';
@@ -497,18 +490,18 @@ function generateWeatherCards(forecast, selectedOptions) {
 }
 
 /**
- * Création d'une carte météorologique
+ * Création d'une carte pour une journée spécifique
  */
 function createWeatherCard(dayData, selectedOptions, index) {
     const card = document.createElement('div');
     card.className = 'weather-card';
     card.style.animationDelay = `${index * 0.1}s`;
     
-    // Date formatée
+    // Formatage de la date
     const date = new Date(dayData.datetime);
     const dateStr = formatDate(date, index);
     
-    // Icône météo basée sur le code weather
+    // Obtention de l'icône météo
     const weatherIcon = getWeatherIcon(dayData.weather);
     const weatherDescription = getWeatherDescription(dayData.weather);
     
@@ -550,7 +543,7 @@ function createWeatherCard(dayData, selectedOptions, index) {
 }
 
 /**
- * Génération des détails supplémentaires selon les options sélectionnées
+ * Génération des détails supplémentaires selon les choix
  */
 function generateAdditionalDetails(dayData, selectedOptions) {
     let detailsHTML = '';
@@ -587,7 +580,7 @@ function generateAdditionalDetails(dayData, selectedOptions) {
 }
 
 /**
- * Obtention de l'icône météorologique selon le code weather
+ * Récupération de l'icône météo en fonction du code
  */
 function getWeatherIcon(weatherCode) {
     const iconMap = {
@@ -602,9 +595,9 @@ function getWeatherIcon(weatherCode) {
         10: 'fas fa-cloud-rain',   // Pluie faible
         11: 'fas fa-cloud-rain',   // Pluie modérée
         12: 'fas fa-cloud-rain',   // Pluie forte
-        13: 'fas fa-cloud-rain',   // Pluie faible verglaçante
+        13: 'fas fa-cloud-rain',   // Pluie verglaçante
         16: 'fas fa-snowflake',    // Neige faible
-        20: 'fas fa-cloud-bolt',   // Averses de pluie faible
+        20: 'fas fa-cloud-bolt',   // Averses légères
         30: 'fas fa-cloud-bolt',   // Orage
         40: 'fas fa-smog',         // Brouillard
         100: 'fas fa-moon',        // Clair (nuit)
@@ -615,7 +608,7 @@ function getWeatherIcon(weatherCode) {
 }
 
 /**
- * Obtention de la description météorologique
+ * Obtention de la description météo associée
  */
 function getWeatherDescription(weatherCode) {
     const descriptionMap = {
@@ -643,7 +636,7 @@ function getWeatherDescription(weatherCode) {
 }
 
 /**
- * Conversion de la direction du vent en texte
+ * Conversion de la direction du vent en une valeur textuelle
  */
 function getWindDirection(degrees) {
     const directions = [
@@ -658,7 +651,7 @@ function getWindDirection(degrees) {
 }
 
 /**
- * Formatage de la date
+ * Formatage de la date pour l'affichage
  */
 function formatDate(date, index) {
     if (index === 0) {
@@ -684,14 +677,14 @@ function getSelectedOptions() {
 }
 
 /**
- * Mise à jour de la valeur du slider
+ * Mise à jour de la valeur du curseur
  */
 function updateDaysValue() {
     elements.daysValue.textContent = elements.daysSlider.value;
 }
 
 /**
- * Affichage/masquage du loading
+ * Affichage ou masquage de l'indicateur de chargement
  */
 function showLoading(show) {
     elements.loading.style.display = show ? 'block' : 'none';
@@ -708,7 +701,7 @@ function showError(message) {
     elements.errorMessage.style.display = 'block';
     elements.resultsSection.style.display = 'none';
     
-    // Masquer l'erreur après 5 secondes
+    // Masquer l'erreur après un délai
     setTimeout(hideError, 5000);
 }
 
@@ -720,6 +713,6 @@ function hideError() {
 }
 
 /**
- * Initialisation au chargement de la page
+ * Initialisation lorsque le document est chargé
  */
 document.addEventListener('DOMContentLoaded', initApp);
